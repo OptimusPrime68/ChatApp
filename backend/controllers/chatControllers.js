@@ -57,9 +57,9 @@ const fetchChats = asyncHandler( async (req,res)=>{
 })
 
 const createGroupChat = asyncHandler( async(req,res)=>{
-    if(!req,body.users || !req.body.name){
+    if(!req.body.users || !req.body.name){
         return res.status(400).send({
-            message: "Fill all feils"
+            message: "Fill all feilds"
         });
     }
     var users = JSON.parse(req.body.users);
