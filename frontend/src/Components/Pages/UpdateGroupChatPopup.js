@@ -22,7 +22,7 @@ import UserBadgeItem from "./UserBadgeItem";
 import axios from "axios";
 import UserListItem from "./UserListItem";
 
-const UpdateGroupChatPopup = ({ fetchAgain, setFetchAgain }) => {
+const UpdateGroupChatPopup = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [groupChatName, setGroupChatName] = useState();
   const [search, setSearch] = useState();
@@ -87,46 +87,46 @@ const UpdateGroupChatPopup = ({ fetchAgain, setFetchAgain }) => {
   };
 
   const handleRemove = async (user1) => {
-    console.log(selectedChat.groupAdmin._id, user._id, user1._id);
-    // if (selectedChat.groupAdmin._id !== user._id && user1._id !== user._id) {
-    //   toast({
-    //     title: "Only admins can remove someone!",
-    //     status: "error",
-    //     duration: 3000,
-    //     isClosable: true,
-    //     position: "bottom",
-    //   });
-    //   return;
-    // }
-    // try {
-    //   setLoading(true);
-    //   const config = {
-    //     headers: {
-    //       Authorization: `Bearer ${user.token}`,
-    //     },
-    //   };
-    //   const { data } = await axios.put(
-    //     `/api/chat/groupremove`,
-    //     {
-    //       chatId: selectedChat._id,
-    //       userId: user1._id,
-    //     },
-    //     config
-    //   );
-    //   user1._id === user._id ? setSelectedChat() : setSelectedChat(data);
-    //   setFetchAgain(!fetchAgain);
-    //   setLoading(false);
-    // } catch (error) {
-    //   toast({
-    //     title: "Error Occured!",
-    //     description: error.response.data.message,
-    //     status: "error",
-    //     duration: 3000,
-    //     isClosable: true,
-    //     position: "bottom",
-    //   });
-    //   setLoading(false);
-    // }
+    if (selectedChat.groupAdmin._id !== user._id && user1._id !== user._id) {
+      toast({
+        title: "Only admins can remove someone!",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom",
+      });
+      return;
+    }
+    try {
+      setLoading(true);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const { data } = await axios.put(
+        `/api/chat/groupremove`,
+        {
+          chatId: selectedChat._id,
+          userId: user1._id,
+        },
+        config
+      );
+      user1._id === user._id ? setSelectedChat() : setSelectedChat(data);
+      setFetchAgain(!fetchAgain);
+      fetchMessages();
+      setLoading(false);
+    } catch (error) {
+      toast({
+        title: "Error Occured!",
+        description: error.response.data.message,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom",
+      });
+      setLoading(false);
+    }
   };
 
   const handleRename = async () => {
@@ -267,7 +267,7 @@ const UpdateGroupChatPopup = ({ fetchAgain, setFetchAgain }) => {
             )}
           </ModalBody>
           <ModalFooter>
-            <Button onClick={handleRemove(user)} colorScheme="red">
+            <Button onClick={() => handleRemove(user)} colorScheme="red">
               Leave Group
             </Button>
           </ModalFooter>
