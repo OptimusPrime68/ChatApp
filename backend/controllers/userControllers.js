@@ -68,4 +68,23 @@ const allUsers = asyncHandler(async (req, res) => {
   res.send(users);
 });
 
-module.exports = { registerUser, authUser, allUsers };
+const updateUser = asyncHandler( async(req,res)=>{
+    const{ userId, pic } = req.body;
+
+    const update = await User.findByIdAndUpdate(userId,{
+        picture:pic},
+        {
+            new: true,
+        }
+    )
+   
+    if (!update) {
+        res.status(404);
+        throw new Error("Cannot update,user not found");
+      } else {
+        res.json(update);
+      }
+
+})
+
+module.exports = { registerUser, authUser, allUsers, updateUser };
