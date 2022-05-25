@@ -1,4 +1,4 @@
-import { ViewIcon } from "@chakra-ui/icons";
+import { ViewIcon, PhoneIcon } from "@chakra-ui/icons";
 import {
   Modal,
   ModalOverlay,
@@ -13,6 +13,7 @@ import {
   Text,
   Image,
 } from "@chakra-ui/react";
+import { BsFillCameraVideoFill } from "react-icons/bs";
 
 const ProfileModal = ({ user, children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -22,11 +23,25 @@ const ProfileModal = ({ user, children }) => {
       {children ? (
         <span onClick={onOpen}>{children}</span>
       ) : (
-        <IconButton
-          display={{ base: "flex" }}
-          icon={<ViewIcon />}
-          onClick={onOpen}
-        />
+        <>
+          <div style={{ display: "flex" }}>
+            <IconButton
+              display={{ base: "flex" }}
+              mr={2}
+              icon={<PhoneIcon />}
+            />
+            <IconButton
+              display={{ base: "flex" }}
+              mr={2}
+              icon={<BsFillCameraVideoFill />}
+            />
+            <IconButton
+              display={{ base: "flex" }}
+              icon={<ViewIcon />}
+              onClick={onOpen}
+            />
+          </div>
+        </>
       )}
       <Modal size="lg" onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
