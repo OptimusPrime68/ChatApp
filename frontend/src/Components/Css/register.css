@@ -1,18 +1,10 @@
 .register {
-  height: 100vh;
+  height: 60vh;
   width: 100%;
-  background-image: url("../../../public/chat_back.jpg");
-  background-position: center;
   text-align: center;
 }
 
 .registerform {
-  width: 22rem;
-  margin: auto;
-  float: none;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
   box-shadow: 5px 10px #888888;
   opacity: 0.75;
 }

@@ -14,27 +14,30 @@ import {
   Image,
 } from "@chakra-ui/react";
 
-const ProfileModal = ({ children }) => {
+const ProfileModal = ({ user, children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
-      <span onClick={onOpen}>{children}</span>
-      {/* {children ? (
+      {children ? (
         <span onClick={onOpen}>{children}</span>
       ) : (
-        <IconButton d={{ base: "flex" }} icon={<ViewIcon />} onClick={onOpen} />
-      )} */}
+        <IconButton
+          display={{ base: "flex" }}
+          icon={<ViewIcon />}
+          onClick={onOpen}
+        />
+      )}
       <Modal size="lg" onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
-        <ModalContent h="410px">
+        <ModalContent>
           <ModalHeader
             fontSize="40px"
             fontFamily="Work sans"
             display="flex"
             justifyContent="center"
           >
-            User Name
+            {user.name}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody
@@ -43,12 +46,17 @@ const ProfileModal = ({ children }) => {
             alignItems="center"
             justifyContent="space-between"
           >
-            <Image borderRadius="full" boxSize="150px" src="" alt="User Name" />
+            <Image
+              borderRadius="full"
+              boxSize="150px"
+              src={user.picture}
+              alt={user.name}
+            />
             <Text
-              fontSize={{ base: "28px", md: "30px" }}
+              fontSize={{ base: "20px", md: "25px" }}
               fontFamily="Work sans"
             >
-              Email: gaurangpande68@gmail.com
+              Email: {user.email}
             </Text>
           </ModalBody>
           <ModalFooter>

@@ -21,9 +21,13 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { ChatState } from "../Context/ChatProvider";
 import ChatLoading from "./ChatLoading";
 import ProfileModal from "./ProfileModal";
 import ProfilePic from "./ProfilePic";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import UserListItem from "./UserListItem";
 
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
@@ -32,9 +36,17 @@ const SideDrawer = () => {
   const [loadingChat, setLoadingChat] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const toast = useToast();
+  const { user, setSelectedChat, chats, setChats } = ChatState();
 
-  const handleSearch = () => {
+  const toast = useToast();
+  const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    localStorage.removeItem("userInfo");
+    navigate("/");
+  };
+
+  const handleSearch = async () => {
     if (!search) {
       toast({
         title: "Please Enter something in search",
@@ -48,11 +60,50 @@ const SideDrawer = () => {
 
     try {
       setLoading(true);
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      const { data } = await axios.get(`/api/user?search=${search}`, config);
+
       setLoading(false);
+      setSearchResult(data);
     } catch (error) {
       toast({
         title: "Error Occured!",
-        description: "Failed to load the Search Results",
+        description: "Failed to Load the Search Results",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+    }
+  };
+
+  const accessChat = async (userId) => {
+    console.log(userId);
+    try {
+      setLoadingChat(true);
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      const { data } = await axios.post("/api/chat", { userId }, config);
+
+      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+      setSelectedChat(data);
+      setLoadingChat(false);
+      onClose();
+    } catch (error) {
+      toast({
+        title: "Error Fetching the Chat",
+        description: error.message,
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -92,10 +143,15 @@ const SideDrawer = () => {
           </Menu>
           <Menu>
             <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-              <Avatar size="sm" cursor="pointer" name="pic" src="" />
+              <Avatar
+                size="sm"
+                cursor="pointer"
+                name={user.name}
+                src={user.picture}
+              />
             </MenuButton>
             <MenuList>
-              <ProfileModal>
+              <ProfileModal user={user}>
                 <MenuItem>My Profile</MenuItem>
               </ProfileModal>
               <MenuDivider />
@@ -103,7 +159,7 @@ const SideDrawer = () => {
                 <MenuItem>Update Profile Picture</MenuItem>
               </ProfilePic>
               <MenuDivider />
-              <MenuItem>Logout</MenuItem>
+              <MenuItem onClick={logoutHandler}>Logout</MenuItem>
             </MenuList>
           </Menu>
         </div>
@@ -123,7 +179,17 @@ const SideDrawer = () => {
               />
               <Button onClick={handleSearch}>Go</Button>
             </Box>
-            {loading ? <ChatLoading /> : <span>results</span>}
+            {loading ? (
+              <ChatLoading />
+            ) : (
+              searchResult?.map((user) => (
+                <UserListItem
+                  key={user._id}
+                  user={user}
+                  handleFunction={() => accessChat(user._id)}
+                />
+              ))
+            )}
             {loadingChat && <Spinner ml="auto" display="flex" />}
           </DrawerBody>
         </DrawerContent>

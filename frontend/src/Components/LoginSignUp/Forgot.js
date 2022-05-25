@@ -27,14 +27,6 @@ function Forgot() {
           <Button variant="primary" className="mb-3">
             Send Email
           </Button>
-          <hr></hr>
-          <br></br>
-          <p>
-            Not a member? <a href="/register">Sign Up</a>
-          </p>
-          <p>
-            Already a member? <a href="/">Sign In</a>
-          </p>
         </Card.Body>
       </Card>
     </div>

@@ -1,10 +1,10 @@
 import { Avatar, Box, Text } from "@chakra-ui/react";
 import React from "react";
 
-const UserListItem = () => {
+const UserListItem = ({ user, handleFunction }) => {
   return (
     <Box
-      onClick=""
+      onClick={handleFunction}
       cursor="pointer"
       bg="#E8E8E8"
       _hover={{
@@ -20,12 +20,18 @@ const UserListItem = () => {
       mb={2}
       borderRadius="lg"
     >
-      <Avatar mr={2} size="sm" cursor="pointer" name="example" src="" />
+      <Avatar
+        mr={2}
+        size="sm"
+        cursor="pointer"
+        name={user.name}
+        src={user.picture}
+      />
       <Box>
-        <Text>User Name</Text>
+        <Text>{user.name}</Text>
         <Text fontSize="xs">
           <b>Email : </b>
-          User Email
+          {user.email}
         </Text>
       </Box>
     </Box>
