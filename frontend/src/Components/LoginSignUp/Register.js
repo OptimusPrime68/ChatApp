@@ -80,7 +80,9 @@ function Register() {
     <div className="register">
       <Card className="registerform">
         <Card.Body>
-          <Card.Title>Sign Up</Card.Title>
+          <Card.Title>
+            <b>Sign Up</b>
+          </Card.Title>
           <hr></hr>
           <Card.Text>
             <div className="row mb-3 mt-3">
@@ -146,12 +148,15 @@ function Register() {
             </div>
           </Card.Text>
           <Button
-            variant="primary"
+            style={{
+              background: "linear-gradient(#fffcff, #d5fefd)",
+              color: "black",
+            }}
             className="mt-3 mb-3"
             onClick={submitHandler}
             isLoading={loading}
           >
-            Sign Up
+            <b>Sign Up</b>
           </Button>
         </Card.Body>
       </Card>

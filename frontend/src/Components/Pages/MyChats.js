@@ -50,16 +50,26 @@ const MyChats = ({ fetchAgain }) => {
       w={{ base: "100%", md: "31%" }}
       borderRadius="lg"
       borderWidth="1px"
+      style={{
+        background: "linear-gradient(#f5f7fa , #b8c6db)",
+        color: "black",
+      }}
     >
       <Box
         pb={3}
         px={3}
+        mb={2}
+        borderRadius="xl"
         fontSize={{ base: "28px", md: "30px" }}
         fontFamily="Work sans"
         display="flex"
         w="100%"
         justifyContent="space-between"
         alignItems="center"
+        style={{
+          background: "linear-gradient(#d5d0e5 , #f3e6e8)",
+          color: "black",
+        }}
       >
         My Chats
         <GroupChatPopup>
@@ -67,6 +77,8 @@ const MyChats = ({ fetchAgain }) => {
             display="flex"
             fontSize={{ base: "17px", md: "10px", lg: "17px" }}
             rightIcon={<AddIcon />}
+            ml={1}
+            mt={2}
           >
             New Group Chat
           </Button>
@@ -81,6 +93,10 @@ const MyChats = ({ fetchAgain }) => {
         h="100%"
         borderRadius="lg"
         overflowY="hidden"
+        style={{
+          background: "linear-gradient(#d5d0e5 , #f3e6e8)",
+          color: "black",
+        }}
       >
         {chats ? (
           <Stack overflowY="scroll">
@@ -91,8 +107,8 @@ const MyChats = ({ fetchAgain }) => {
                 bg={
                   selectedChat === chat
                     ? selectedChat.isGroupChat
-                      ? "orange"
-                      : "#38B2AC"
+                      ? "linear-gradient(to right,#ffcc2f , #ef5734)"
+                      : "linear-gradient(to right,#e5bdf6 , #d8dede)"
                     : "#E8E8E8"
                 }
                 color={selectedChat === chat ? "white" : "black"}

@@ -7,7 +7,9 @@ function Forgot() {
     <div className="login">
       <Card className="loginform">
         <Card.Body>
-          <Card.Title>Forgot Password</Card.Title>
+          <Card.Title>
+            <b>Forgot Password</b>
+          </Card.Title>
           <hr></hr>
           <Card.Text>
             <div className="row mb-3 mt-3">
@@ -24,8 +26,14 @@ function Forgot() {
               </div>
             </div>
           </Card.Text>
-          <Button variant="primary" className="mb-3">
-            Send Email
+          <Button
+            style={{
+              background: "linear-gradient(#fffcff, #d5fefd)",
+              color: "black",
+            }}
+            className="mb-3"
+          >
+            <b>Send Email</b>
           </Button>
         </Card.Body>
       </Card>

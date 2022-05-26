@@ -7,29 +7,53 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
-  Text,
 } from "@chakra-ui/react";
 import Forgot from "../LoginSignUp/Forgot";
 import Login from "../LoginSignUp/Login";
 import Register from "../LoginSignUp/Register";
+import "../Css/home.css";
 
 const Home = () => {
   return (
     <Container centerContent>
       <Box
-        bg="white"
+        className="home"
         w="100%"
         p={4}
-        borderRadius="lg"
-        borderWidth="1px"
         mt={{ base: "2", md: "40" }}
         mb={{ base: "2", md: "none" }}
       >
-        <Tabs isFitted variant="soft-rounded">
+        <Tabs isFitted variant="soft-rounded" size="md">
           <TabList mb="1em">
-            <Tab>Login</Tab>
-            <Tab>Sign Up</Tab>
-            <Tab>Forgot Password</Tab>
+            <Tab
+              mr={2}
+              className="tabcolor"
+              _selected={{
+                color: "linear-gradient(#e61d8c, #c7e9fb)",
+                background: "linear-gradient(#d5d0e5, #f3e6e8)",
+              }}
+            >
+              <b>Login</b>
+            </Tab>
+            <Tab
+              mr={2}
+              className="tabcolor"
+              _selected={{
+                color: "linear-gradient(#e61d8c, #c7e9fb)",
+                background: "linear-gradient(#d5d0e5, #f3e6e8)",
+              }}
+            >
+              <b>Sign Up</b>
+            </Tab>
+            <Tab
+              className="tabcolor"
+              _selected={{
+                color: "linear-gradient(#e61d8c, #c7e9fb)",
+                background: "linear-gradient(#d5d0e5, #f3e6e8)",
+              }}
+            >
+              <b>Forgot Password</b>
+            </Tab>
           </TabList>
           <hr></hr>
           <TabPanels>

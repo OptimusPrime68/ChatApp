@@ -74,7 +74,9 @@ function Login() {
     <div className="login">
       <Card className="loginform">
         <Card.Body>
-          <Card.Title>Sign In</Card.Title>
+          <Card.Title>
+            <b>Sign In</b>
+          </Card.Title>
           <hr></hr>
           <Card.Text>
             <div className="row mb-3 mt-3">
@@ -107,12 +109,15 @@ function Login() {
             </div>
           </Card.Text>
           <Button
-            variant="primary"
+            style={{
+              background: "linear-gradient(#fffcff, #d5fefd)",
+              color: "black",
+            }}
             className="mb-3 mt-3"
             onClick={submitHandler}
             isLoading={loading}
           >
-            Sign In
+            <b>Sign In</b>
           </Button>
         </Card.Body>
       </Card>

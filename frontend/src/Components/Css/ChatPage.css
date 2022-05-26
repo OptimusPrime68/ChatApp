@@ -1,4 +1,3 @@
 .chatpage {
-  background-image: url("../../../public/chat_back.jpg");
-  background-position: center;
+  background-image: linear-gradient(to right, #5f0a87, #a4508b);
 }

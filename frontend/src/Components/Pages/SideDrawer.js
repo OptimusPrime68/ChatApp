@@ -29,8 +29,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import UserListItem from "./UserListItem";
 import { getSender } from "../Config/ChatLogics";
-import {Effect} from "react-notification-badge"
-import NotificationBadge from "react-notification-badge/lib/components/NotificationBadge";
+import { Effect } from "react-notification-badge";
+import NotificationBadge from "react-notification-badge";
 
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
@@ -39,12 +39,14 @@ const SideDrawer = () => {
   const [loadingChat, setLoadingChat] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { user, 
+  const {
+    user,
     setSelectedChat,
-     chats, setChats,
-     notification,
-     setNotification
-     } = ChatState();
+    chats,
+    setChats,
+    notification,
+    setNotification,
+  } = ChatState();
 
   const toast = useToast();
   const navigate = useNavigate();
@@ -146,25 +148,25 @@ const SideDrawer = () => {
           <Menu>
             <MenuButton p={1}>
               <NotificationBadge
-              count={notification.length}
-              effects={Effect.SCALE}
+                count={notification.length}
+                effects={Effect.SCALE}
               />
               <BellIcon fontSize="2xl" m={1} />
             </MenuButton>
             <MenuList pl={2}>
               {!notification.length && "No new Messages"}
-              {notification.map(notif=>(
-                <MenuItem key={notif._id}
-                onClick={()=>{
-                  console.log(notif)
-                  setSelectedChat(notif.chat)
-                  setNotification(notification.filter(n=> n!== notif))
-                }}
+              {notification.map((notif) => (
+                <MenuItem
+                  key={notif._id}
+                  onClick={() => {
+                    console.log(notif);
+                    setSelectedChat(notif.chat);
+                    setNotification(notification.filter((n) => n !== notif));
+                  }}
                 >
                   {notif.chat.isGroupChat
-                  ? `New Message in ${notif.chat.chatName}`
-                  : `New Message from ${getSender(user,notif.chat.users)}`}
-
+                    ? `New Message in ${notif.chat.chatName}`
+                    : `New Message from ${getSender(user, notif.chat.users)}`}
                 </MenuItem>
               ))}
             </MenuList>
@@ -197,7 +199,11 @@ const SideDrawer = () => {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader borderBottomWidth="1px">Search Users</DrawerHeader>
-          <DrawerBody>
+          <DrawerBody
+            style={{
+              background: "linear-gradient(to left,#e5bdf6 , #d8dede)",
+            }}
+          >
             <Box display="flex" pb={2}>
               <Input
                 placeholder="Search by name or email"
