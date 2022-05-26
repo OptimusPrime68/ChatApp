@@ -39,14 +39,15 @@ io.on("connection", (socket) => {
 
   socket.on("new message", (newMessageRecieved) => {
     var chat = newMessageRecieved.chat;
+    console.log(chat)
 
     if (!chat.users) return console.log("chat.users not defined");
-
-    chat.users.forEach((user) => {
-      if (user._id == newMessageRecieved.sender._id) return;
-
-      socket.in(user._id).emit("message recieved", newMessageRecieved);
-    });
+    console.log("id is :",socket.id);
+    // chat.users.forEach((user) => {
+    //   if (user._id == newMessageRecieved.sender._id) return;
+      
+    socket.broadcast.emit("message-recieved", newMessageRecieved);
+    // });
   });
 
   socket.off("setup", () => {
