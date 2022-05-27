@@ -32,7 +32,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
   const toast = useToast();
-  
+
   useEffect(() => {
     socket = io(ENDPOINT);
     socket.emit("setup", user);
@@ -50,10 +50,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
-  const { selectedChat,
-     setSelectedChat, 
-     user, notification, 
-     setNotification } = ChatState();
+  const { selectedChat, setSelectedChat, user, notification, setNotification } =
+    ChatState();
 
   const fetchMessages = async () => {
     if (!selectedChat) return;
@@ -121,25 +119,19 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }
   };
 
-
-
- console.log(notification,"........")
+  console.log(notification, "........");
 
   useEffect(() => {
-    
-    socket.on("message-recieved", newMessageRecieved => {
-      
+    socket.on("message-recieved", (newMessageRecieved) => {
       if (
         !selectedChatCompare || // if chat is not selected or doesn't match current chat
         selectedChatCompare._id !== newMessageRecieved.chat._id
-      ) 
-      {
+      ) {
         if (!notification.includes(newMessageRecieved)) {
           setNotification([newMessageRecieved, ...notification]);
           setFetchAgain(!fetchAgain);
         }
-      } 
-      else {
+      } else {
         setMessages([...messages, newMessageRecieved]);
       }
     });
@@ -212,7 +204,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             flexDir="column"
             justifyContent="flex-end"
             p={3}
-            bg="#E8E8E8"
+            backgroundImage="./chat_back.jpg"
             w="100%"
             h="100%"
             borderRadius="lg"
@@ -247,7 +239,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               )}
               <Input
                 variant="filled"
-                bg="#E0E0E0"
+                bg="#fff"
                 placeholder="Enter a message.."
                 onChange={typingHandler}
                 value={newMessage}
