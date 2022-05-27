@@ -90,7 +90,9 @@ const ProfilePic = ({ children }) => {
         config
       );
       console.log(data);
-
+      // const user = JSON.parse(localStorage.getItem("userInfo"));
+      user.picture=picData;
+      localStorage.setItem("userInfo",JSON.stringify(user));
       toast({
         title: "Image Upload successful",
         status: "success",
@@ -105,6 +107,12 @@ const ProfilePic = ({ children }) => {
 
     setLoading(false);
   };
+  const refreshHandler = ()=>{
+   
+     
+      
+      
+    }
   return (
     <>
       <span onClick={onOpen}>{children}</span>
