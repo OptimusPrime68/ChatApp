@@ -22,9 +22,10 @@ const io = require("socket.io")(server, {
     // credentials: true,
   },
 });
-
+ 
 io.on("connection", (socket) => {
-  console.log("Connected to socket.io");
+    
+  console.log("Connected to socket.io ");
   socket.on("setup", (userData) => {
     socket.join(userData._id);
     socket.emit("connected");
@@ -34,7 +35,9 @@ io.on("connection", (socket) => {
     socket.join(room);
     console.log("User Joined Room: " + room);
   });
+
   socket.on("typing", (room) => socket.in(room).emit("typing"));
+
   socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
 
   socket.on("new message", (newMessageRecieved) => {
@@ -49,6 +52,28 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("message-recieved", newMessageRecieved);
     // });
   });
+  //video call
+  socket.on("callUser",(data)=>{
+      console.log("trying to call")
+      console.log(socket.id)
+      io.to(data.userToCall).emit("callUser",{
+          signal: data.signalData,
+          from: data.from,
+          name: data.name,
+      })
+  })
+
+  socket.on("answerCall",(data)=>{
+    console.log("trying to accept")
+      io.to(data.to).emit("callAccepted", data.signal)
+  })
+
+  socket.on("disconnect",()=>{
+      socket.broadcast.emit("callEnded")
+  })
+
+
+
 
   socket.off("setup", () => {
     console.log("USER DISCONNECTED");
